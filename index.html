@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoLauncher — Lightweight & Customizable Minecraft Launcher</title>
+    <!-- Подключаем иконки FontAwesome для Discord и Почты -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-hover: #00e577;
+            --bg-dark: #121214;
+            --card-bg: rgba(26, 26, 30, 0.75);
+            --card-border: rgba(41, 41, 46, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(rgba(18, 18, 20, 0.85), rgba(18, 18, 20, 0.85)), 
+                        url('https://raw.githubusercontent.com/Txxicu/lolauncher-site/main/wallpaper.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Шапка сайта */
+        header {
+            text-align: center;
+            padding: 60px 0 40px 0;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-donate {
+            background-color: transparent;
+            color: #ff5555;
+            border: 2px solid #ff5555;
+        }
+
+        .btn-donate:hover {
+            background-color: #ff5555;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 85, 85, 0.3);
+        }
+
+        /* Сетка с фичами */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 60px 0 30px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin: 0;
+            color: var(--text-muted);
+        }
+
+        .card ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Блок стек технологий */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .social-icons a {
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .disclaimer {
+            color: #707075;
+            font-size: 0.85rem !important;
+            margin-top: 15px !important;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Главный баннер -->
+        <header>
+            <h1>LoLauncher</h1>
+            <p>A fast, lightweight, and highly customizable Minecraft launcher focused on user experience and seamless integration with modern services like Modrinth and Ely.by.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download Now</a>
+                <!-- Кнопка доната (пока простоalert, можно убрать onclick когда появится ссылка) -->
+                <a href="#" class="btn btn-donate" onclick="alert('Donation system is currently under development! Thank you for your support.'); return false;"><i class="fa-solid fa-heart"></i> Donate</a>
+            </div>
+        </header>
+
+        <!-- Раздел ключевых возможностей -->
+        <h2 class="section-title">Key Features</h2>
+        <div class="grid">
+            <div class="card">
+                <h3><i class="fa-solid fa-users"></i> Multi-Account System</h3>
+                <ul>
+                    <li><strong>Offline Mode:</strong> Play under any nickname without a password.</li>
+                    <li><strong>Microsoft Authentication:</strong> Official login for licensed accounts.</li>
+                    <li><strong>Ely.by Integration:</strong> Full support for the popular skin and auth service.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-shirt"></i> Smart Skin Management</h3>
+                <ul>
+                    <li>Priority skin & cape loading from Ely.by and Mojang.</li>
+                    <li><strong>Real-time 3D Rendering:</strong> Automatically assembles 3D heads from skin files for the UI.</li>
+                    <li><strong>Custom Avatars:</strong> Upload any photo and crop/rotate it with an in-app built-in editor.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-code-branch"></i> Advanced Version Manager</h3>
+                <ul>
+                    <li>Supports all official versions (Releases, Snapshots, Alpha, Beta).</li>
+                    <li>Automated installation of popular mod loaders: <strong>Forge, Fabric, Quilt</strong>.</li>
+                    <li>Built-in <strong>OptiFine</strong> support.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-cubes"></i> Modrinth Integration</h3>
+                <ul>
+                    <li>Built-in catalog to search, discover, and download mods, shaders, and resource packs directly inside the launcher interface without opening a browser.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-cloud-sun"></i> Offline Capability</h3>
+                <ul>
+                    <li>The launcher caches version manifests. If there is no internet connection, you can still easily launch any previously downloaded game version.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-gamepad"></i> Discord Rich Presence</h3>
+                <ul>
+                    <li>Show off your live game status on Discord, including your current Minecraft version, nickname, and total playtime.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Раздел UX/Удобство -->
+        <h2 class="section-title">User Experience & Comfort</h2>
+        <div class="grid">
+            <div class="card">
+                <h3><i class="fa-solid fa-bolt"></i> Ultimate Performance</h3>
+                <ul>
+                    <li><strong>Instant Account Switching:</strong> Thanks to memory texture caching, profiles swap instantly without network delays.</li>
+                    <li><strong>Blazing Fast Startup:</strong> No heavy web engines like Electron inside. Clean, native-like speed.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-window-restore"></i> Modern UI & Automation</h3>
+                <ul>
+                    <li>Uses native Windows API (via JNA) for modern Windows 10/11 style file dialogs.</li>
+                    <li><strong>Java Automation:</strong> Automatically detects and installs the correct Java version required for each specific Minecraft version.</li>
+                    <li><strong>Debug Console:</strong> Clear log window with error filtering to easily find mod crash causes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Технологический стек -->
+        <h2 class="section-title">Tech Stack</h2>
+        <div class="tech-stack">
+            <span class="tech-item"><strong>Language:</strong> Kotlin</span>
+            <span class="tech-item"><strong>UI Framework:</strong> Jetpack Compose Desktop</span>
+            <span class="tech-item"><strong>Networking:</strong> OkHttp</span>
+            <span class="tech-item"><strong>Architecture:</strong> MVVM with Coroutines</span>
+            <span class="tech-item"><strong>Graphics:</strong> Skia Library</span>
+            <span class="tech-item"><strong>Native API:</strong> JNA (Java Native Access)</span>
+        </div>
+
+        <!-- Подвал сайта -->
+        <footer>
+            <div class="social-icons">
+                <a href="https://discord.com/invite/YfNvZ8mYDp" target="_blank" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="mailto:txxicuteam@gmail.com" title="Contact via Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p>© 2026 LoLauncher. All rights reserved.</p>
+            <p class="disclaimer">Not affiliated with Mojang or Microsoft.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
