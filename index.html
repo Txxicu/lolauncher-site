@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoLauncher</title>
-    <!-- Подключаем иконки FontAwesome для Discord и Почты -->
+    <!-- Подключаем иконки FontAwesome для Discord, Почты и Стрелочек FAQ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -229,10 +229,12 @@
             margin-bottom: 8px;
         }
 
-        /* Стили для страницы About (Команда) */
+        /* Стили для страницы About (Команда и Тестеры) */
         .team-container {
             display: flex;
             justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
             margin-top: 20px;
         }
 
@@ -246,6 +248,11 @@
             width: 100%;
             backdrop-filter: blur(8px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
         }
 
         .member-avatar {
@@ -256,6 +263,14 @@
             object-fit: cover;
             margin-bottom: 15px;
             box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            /* Запрет выделения и перетаскивания */
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .member-avatar.tester-av {
+            border-color: #00bfff;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
         }
 
         .member-name {
@@ -263,6 +278,7 @@
             font-weight: bold;
             color: #fff;
             margin: 5px 0;
+            user-select: none;
         }
 
         .member-role {
@@ -271,23 +287,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 15px;
+            user-select: none;
         }
 
-        .testers-list {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 15px 40px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 auto;
-        }
-
-        .testers-wrapper {
-            text-align: center;
-            margin-top: 20px;
+        .member-role.tester-role {
+            color: #00bfff;
         }
 
         .thats-all {
@@ -296,6 +300,64 @@
             font-size: 1.1rem;
             color: #505055;
             font-style: italic;
+            user-select: none;
+        }
+
+        /* Стили для интерактивного FAQ (Аккордеон) */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+            transition: border-color 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        
+        .faq-question {
+            padding: 18px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--primary);
+        }
+
+        .faq-icon-arrow {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon-arrow {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Достаточно для текста ответа */
+            padding: 0 25px 20px 25px;
         }
 
         /* Футер */
@@ -440,23 +502,69 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Раздел FAQ (Часто задаваемые вопросы с аккордеоном) -->
+            <h2 class="section-title" id="title-faq">Frequently Asked Questions</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span id="q1">Is it free?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+                    </div>
+                    <div class="faq-answer" id="a1">Yes, of course!</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span id="q2">Are there any viruses?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+                    </div>
+                    <div class="faq-answer" id="a2">No, as long as you downloaded it from this official website.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span id="q3">Can I download mods, modpacks, etc.?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+                    </div>
+                    <div class="faq-answer" id="a3">Yes, you can download everything directly through the built-in system.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span id="q4">Can I change my skin in LoLauncher?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+                    </div>
+                    <div class="faq-answer" id="a4">Yes, you can easily do that through the Ely.by service.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span id="q5">My game won't launch, what should I do?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+                    </div>
+                    <div class="faq-answer" id="a5">Please contact our support team via Discord or Email, and we will help you!</div>
+                </div>
+            </div>
         </div>
 
         <!-- СТРАНИЦА: ABOUT -->
         <div id="page-about" class="page">
             <h2 class="section-title" id="title-team">Project Team</h2>
             <div class="team-container">
+                <!-- Карточка разработчика -->
                 <div class="member-card">
-                    <img src="https://github.com/Txxicu.png" alt="Txxicu" class="member-avatar">
+                    <a href="https://github.com/Txxicu" target="_blank" title="Visit GitHub Profile">
+                        <img src="https://github.com/Txxicu.png" alt="Txxicu" class="member-avatar" draggable="false" style="cursor: pointer; transition: transform 0.2s ease;">
+                    </a>
                     <div class="member-name">Txxicu</div>
                     <div class="member-role" id="role-developer">Lead Developer</div>
                 </div>
             </div>
 
             <h2 class="section-title" id="title-testers">Testers</h2>
-            <div class="testers-wrapper">
-                <div class="testers-list">
-                    <strong>m1sanya</strong>
+            <div class="team-container">
+                <!-- Карточка тестера -->
+                <div class="member-card">
+                    <img src="https://i.pinimg.com/736x/9d/0c/fa/9d0cfac3268cfbb596037deb6cdee30a.jpg" alt="m1sanya" class="member-avatar tester-av" draggable="false">
+                    <div class="member-name">m1sanya</div>
+                    <div class="member-role tester-role" id="role-tester">Beta Tester</div>
                 </div>
             </div>
 
@@ -474,7 +582,7 @@
         </footer>
     </div>
 
-    <!-- Скрипт мультиязычности, автоопределения и рандомного фона -->
+    <!-- Скрипт мультиязычности, автоопределения, рандомного фона и FAQ аккордеона -->
     <script>
         const translations = {
             en: {
@@ -487,10 +595,22 @@
                 titleUx: "User Experience & Comfort",
                 titleTeam: "Project Team",
                 titleTesters: "Testers",
+                titleFaq: "Frequently Asked Questions",
                 roleDeveloper: "Lead Developer",
+                roleTester: "Beta Tester",
                 textThatsAll: "well, that's all))",
                 footerRights: "All rights reserved.",
                 donateAlert: "Donation system is currently under development! Thank you for your support.",
+                q1: "Is it free?",
+                a1: "Yes, of course!",
+                q2: "Are there any viruses?",
+                a2: "No, as long as you downloaded it from this official website.",
+                q3: "Can I download mods, modpacks, etc.?",
+                a3: "Yes, you can download everything directly through the built-in system.",
+                q4: "Can I change my skin in LoLauncher?",
+                a4: "Yes, you can easily do that through the Ely.by service.",
+                q5: "My game won't launch, what should I do?",
+                a5: "Please contact our support team via Discord or Email, and we will help you!",
                 f1Title: "<i class='fa-solid fa-users'></i> Multi-Account System",
                 f1List: "<li><strong>Offline Mode:</strong> Play under any nickname without a password.</li><li><strong>Microsoft Authentication:</strong> Official login for licensed accounts.</li><li><strong>Ely.by Integration:</strong> Full support for the popular skin and auth service.</li>",
                 f2Title: "<i class='fa-solid fa-shirt'></i> Smart Skin Management",
@@ -518,10 +638,22 @@
                 titleUx: "Удобство и UX",
                 titleTeam: "Команда проекта",
                 titleTesters: "Тестеры",
+                titleFaq: "Часто задаваемые вопросы",
                 roleDeveloper: "Главный разработчик",
+                roleTester: "Бета-тестер",
                 textThatsAll: "ну это все))",
                 footerRights: "Все права защищены.",
                 donateAlert: "Система пожертвований находится в разработке! Спасибо за вашу поддержку.",
+                q1: "Это бесплатно?",
+                a1: "Да, конечно!",
+                q2: "Есть ли вирусы?",
+                a2: "Нет, если вы скачали лаунчер с данного сайта.",
+                q3: "Можно ли скачивать моды, сборки и т.д.?",
+                a3: "Да, всё это можно скачивать напрямую через встроенную систему лаунчера.",
+                q4: "Можно ли менять скин в LoLauncher?",
+                a4: "Да, это можно делать через встроенную интеграцию с сервисом ely.by.",
+                q5: "У меня не запускается игра, что делать?",
+                a5: "Обратитесь в нашу поддержку через Discord или по почте, и мы обязательно поможем!",
                 f1Title: "<i class='fa-solid fa-users'></i> Мультиаккаунтность",
                 f1List: "<li><strong>Offline:</strong> Игра под любым ником без пароля.</li><li><strong>Microsoft:</strong> Официальная авторизация для лицензионных аккаунтов.</li><li><strong>Ely.by:</strong> Полная интеграция с популярным сервисом скинов и авторизации.</li>",
                 f2Title: "<i class='fa-solid fa-shirt'></i> Умная работа со скинами",
@@ -546,15 +678,12 @@
         function setLanguage(lang) {
             currentLang = lang;
             
-            // Переключаем подсветку кнопок языков
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`lang-btn-${lang}`).classList.add('active');
 
-            // Обновляем навигацию
             document.getElementById('nav-home').innerText = translations[lang].navHome;
             document.getElementById('nav-about').innerText = translations[lang].navAbout;
 
-            // Обновляем весь текст
             document.getElementById('hero-desc').innerText = translations[lang].heroDesc;
             document.getElementById('btn-download').innerHTML = translations[lang].btnDownload;
             document.getElementById('btn-donate').innerHTML = translations[lang].btnDonate;
@@ -562,11 +691,24 @@
             document.getElementById('title-ux').innerText = translations[lang].titleUx;
             document.getElementById('footer-rights').innerText = translations[lang].footerRights;
             
-            // Текст для страницы About
             document.getElementById('title-team').innerText = translations[lang].titleTeam;
             document.getElementById('title-testers').innerText = translations[lang].titleTesters;
+            document.getElementById('title-faq').innerText = translations[lang].titleFaq;
             document.getElementById('role-developer').innerText = translations[lang].roleDeveloper;
+            document.getElementById('role-tester').innerText = translations[lang].roleTester;
             document.getElementById('text-thats-all').innerText = translations[lang].textThatsAll;
+            
+            // FAQ текст
+            document.getElementById('q1').innerText = translations[lang].q1;
+            document.getElementById('a1').innerText = translations[lang].a1;
+            document.getElementById('q2').innerText = translations[lang].q2;
+            document.getElementById('a2').innerText = translations[lang].a2;
+            document.getElementById('q3').innerText = translations[lang].q3;
+            document.getElementById('a3').innerText = translations[lang].a3;
+            document.getElementById('q4').innerText = translations[lang].q4;
+            document.getElementById('a4').innerText = translations[lang].a4;
+            document.getElementById('q5').innerText = translations[lang].q5;
+            document.getElementById('a5').innerText = translations[lang].a5;
             
             document.getElementById('f1-title').innerHTML = translations[lang].f1Title;
             document.getElementById('f1-list').innerHTML = translations[lang].f1List;
@@ -587,25 +729,38 @@
             document.getElementById('u2-list').innerHTML = translations[lang].u2List;
         }
 
-        // --- ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ---
         function switchPage(pageName) {
-            // Убираем активный класс со всех страниц и ссылок меню
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
             
-            // Включаем нужную страницу
             document.getElementById(`page-${pageName}`).classList.add('active');
             document.getElementById(`nav-${pageName}`).classList.add('active');
             
-            // При смене страницы плавно скроллим вверх
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- ЛОГИКА ДЛЯ FAQ (АККОРДЕОН) ---
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            
+            // Проверяем, активен ли этот пункт уже
+            const isActive = faqItem.classList.contains('active');
+            
+            // Закрываем все остальные открытые вкладки FAQ (если хочется, чтобы открыта была только одна)
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Если кликнутый элемент не был активен, то открываем его
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
         }
 
         function triggerDonate() {
             alert(translations[currentLang].donateAlert);
         }
 
-        // --- ФУНКЦИЯ ДЛЯ РАНДОМНОГО ФОНА ---
         function setRandomBackground() {
             const wallpapers = [
                 'images/wallpaper.jpg',
@@ -618,7 +773,6 @@
             document.body.style.backgroundImage = `linear-gradient(rgba(18, 18, 20, 0.85), rgba(18, 18, 20, 0.85)), url('${selectedWallpaper}')`;
         }
 
-        // --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ---
         window.addEventListener('DOMContentLoaded', () => {
             setRandomBackground();
 
