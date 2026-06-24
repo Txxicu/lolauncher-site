@@ -169,7 +169,8 @@
             width: 120px;
             height: auto;
             margin-bottom: 15px;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.3));
+            /* Изменили зелёную обводку на аккуратную серую тень */
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
             user-select: none;
             -webkit-user-drag: none;
         }
@@ -432,12 +433,17 @@
             text-decoration: none;
         }
 
-        .social-icons a:hover {
-            color: var(--primary);
+        /* Кастомные цвета иконок при наведении */
+        .social-icons a.discord-icon:hover {
+            color: #5865F2; /* Фирменный синий Discord */
         }
 
         .social-icons a.vk-icon:hover {
-            color: #0077ff; /* Цвет оригинального ВК при наведении */
+            color: #0077ff; /* Фирменный синий VK */
+        }
+
+        .social-icons a.email-icon:hover {
+            color: #00ff88; /* Зеленый цвет для почты */
         }
 
         footer p {
@@ -634,9 +640,12 @@
         <!-- Подвал -->
         <footer>
             <div class="social-icons">
+                <!-- Discord — Первый -->
+                <a href="https://discord.com/invite/YfNvZ8mYDp" target="_blank" class="discord-icon" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
+                <!-- VK — Второй по счёту -->
                 <a href="https://vk.com/txxicuteam" target="_blank" class="vk-icon" title="VK Group"><i class="fa-brands fa-vk"></i></a>
-                <a href="https://discord.com/invite/YfNvZ8mYDp" target="_blank" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="mailto:txxicuteam@gmail.com" title="Contact via Email"><i class="fa-solid fa-envelope"></i></a>
+                <!-- Почта — Третья -->
+                <a href="mailto:txxicuteam@gmail.com" class="email-icon" title="Contact via Email"><i class="fa-solid fa-envelope"></i></a>
             </div>
             <p>© 2026 LoLauncher. <span id="footer-rights">All rights reserved.</span></p>
             <p class="disclaimer">Not affiliated with Mojang or Microsoft.</p>
