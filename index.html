@@ -19,7 +19,6 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Базовые стили для фона, само изображение будет подставляться через JS */
             background-color: var(--bg-dark);
             background-repeat: no-repeat;
             background-position: center center;
@@ -29,7 +28,7 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            transition: background-image 0.5s ease; /* Плавное появление фона */
+            transition: background-image 0.5s ease;
         }
 
         /* Панель переключения языка */
@@ -73,7 +72,6 @@
             background: rgba(0, 255, 136, 0.1);
         }
 
-        /* Стили для SVG флагов */
         .flag-icon {
             width: 20px;
             height: 15px;
@@ -82,16 +80,47 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
+        /* Навигационное меню страницы */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: color 0.2s;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px 20px 40px 20px;
+        }
+
+        /* Управление видимостью страниц */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
         }
 
         /* Шапка сайта */
         header {
             text-align: center;
-            padding: 60px 0 40px 0;
+            padding: 40px 0 40px 0;
         }
 
         header h1 {
@@ -200,6 +229,75 @@
             margin-bottom: 8px;
         }
 
+        /* Стили для страницы About (Команда) */
+        .team-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 250px;
+            width: 100%;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 5px 0;
+        }
+
+        .member-role {
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .testers-list {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 15px 40px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .testers-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .thats-all {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.1rem;
+            color: #505055;
+            font-style: italic;
+        }
+
         /* Футер */
         footer {
             text-align: center;
@@ -251,87 +349,118 @@
         </button>
     </div>
 
+    <!-- Навигация сайта -->
+    <nav>
+        <a id="nav-home" class="active" onclick="switchPage('home')">Home</a>
+        <a id="nav-about" onclick="switchPage('about')">About</a>
+    </nav>
+
     <div class="container">
-        <!-- Главный баннер -->
-        <header>
-            <h1>LoLauncher</h1>
-            <p id="hero-desc">A fast, lightweight, and highly customizable Minecraft launcher focused on user experience and seamless integration with modern services like Modrinth and Ely.by.</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-primary" id="btn-download"><i class="fa-solid fa-download"></i> Download Now</a>
-                <a href="#" class="btn btn-donate" id="btn-donate" onclick="triggerDonate(); return false;"><i class="fa-solid fa-heart"></i> Donate</a>
-            </div>
-        </header>
+        
+        <!-- СТРАНИЦА: HOME -->
+        <div id="page-home" class="page active">
+            <!-- Главный баннер -->
+            <header>
+                <h1>LoLauncher</h1>
+                <p id="hero-desc">A fast, lightweight, and highly customizable Minecraft launcher focused on user experience and seamless integration with modern services like Modrinth and Ely.by.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" id="btn-download"><i class="fa-solid fa-download"></i> Download Now</a>
+                    <a href="#" class="btn btn-donate" id="btn-donate" onclick="triggerDonate(); return false;"><i class="fa-solid fa-heart"></i> Donate</a>
+                </div>
+            </header>
 
-        <!-- Раздел ключевых возможностей -->
-        <h2 class="section-title" id="title-features">Key Features</h2>
-        <div class="grid">
-            <div class="card">
-                <h3 id="f1-title"><i class="fa-solid fa-users"></i> Multi-Account System</h3>
-                <ul id="f1-list">
-                    <li><strong>Offline Mode:</strong> Play under any nickname without a password.</li>
-                    <li><strong>Microsoft Authentication:</strong> Official login for licensed accounts.</li>
-                    <li><strong>Ely.by Integration:</strong> Full support for the popular skin and auth service.</li>
-                </ul>
+            <!-- Раздел ключевых возможностей -->
+            <h2 class="section-title" id="title-features">Key Features</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 id="f1-title"><i class="fa-solid fa-users"></i> Multi-Account System</h3>
+                    <ul id="f1-list">
+                        <li><strong>Offline Mode:</strong> Play under any nickname without a password.</li>
+                        <li><strong>Microsoft Authentication:</strong> Official login for licensed accounts.</li>
+                        <li><strong>Ely.by Integration:</strong> Full support for the popular skin and auth service.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 id="f2-title"><i class="fa-solid fa-shirt"></i> Smart Skin Management</h3>
+                    <ul id="f2-list">
+                        <li>Priority skin & cape loading from Ely.by and Mojang.</li>
+                        <li><strong>Custom Avatars:</strong> Upload any photo and crop/rotate it with an in-app built-in editor.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 id="f3-title"><i class="fa-solid fa-code-branch"></i> Advanced Version Manager</h3>
+                    <ul id="f3-list">
+                        <li>Supports all official versions (Releases, Snapshots, Alpha, Beta).</li>
+                        <li>Automated installation of popular mod loaders: <strong>Forge, Fabric, Quilt</strong>.</li>
+                        <li>Built-in <strong>OptiFine</strong> support.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 id="f4-title"><i class="fa-solid fa-cubes"></i> Modrinth Integration</h3>
+                    <ul id="f4-list">
+                        <li>Built-in catalog to search, discover, and download mods, shaders, and resource packs directly inside the launcher interface without opening a browser.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 id="f5-title"><i class="fa-solid fa-cloud-sun"></i> Offline Capability</h3>
+                    <ul id="f5-list">
+                        <li>The launcher caches version manifests. If there is no internet connection, you can still easily launch any previously downloaded game version.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 id="f6-title"><i class="fa-solid fa-gamepad"></i> Discord Rich Presence</h3>
+                    <ul id="f6-list">
+                        <li>Show off your live game status on Discord, including your current Minecraft version, nickname, and total playtime.</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="card">
-                <h3 id="f2-title"><i class="fa-solid fa-shirt"></i> Smart Skin Management</h3>
-                <ul id="f2-list">
-                    <li>Priority skin & cape loading from Ely.by and Mojang.</li>
-                    <li><strong>Custom Avatars:</strong> Upload any photo and crop/rotate it with an in-app built-in editor.</li>
-                </ul>
-            </div>
+            <!-- Раздел UX/Удобство -->
+            <h2 class="section-title" id="title-ux">User Experience & Comfort</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 id="u1-title"><i class="fa-solid fa-bolt"></i> Ultimate Performance</h3>
+                    <ul id="u1-list">
+                        <li><strong>Instant Account Switching:</strong> Thanks to memory texture caching, profiles swap instantly without network delays.</li>
+                        <li><strong>Blazing Fast Startup:</strong> No heavy web engines like Electron inside. Clean, native-like speed.</li>
+                    </ul>
+                </div>
 
-            <div class="card">
-                <h3 id="f3-title"><i class="fa-solid fa-code-branch"></i> Advanced Version Manager</h3>
-                <ul id="f3-list">
-                    <li>Supports all official versions (Releases, Snapshots, Alpha, Beta).</li>
-                    <li>Automated installation of popular mod loaders: <strong>Forge, Fabric, Quilt</strong>.</li>
-                    <li>Built-in <strong>OptiFine</strong> support.</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3 id="f4-title"><i class="fa-solid fa-cubes"></i> Modrinth Integration</h3>
-                <ul id="f4-list">
-                    <li>Built-in catalog to search, discover, and download mods, shaders, and resource packs directly inside the launcher interface without opening a browser.</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3 id="f5-title"><i class="fa-solid fa-cloud-sun"></i> Offline Capability</h3>
-                <ul id="f5-list">
-                    <li>The launcher caches version manifests. If there is no internet connection, you can still easily launch any previously downloaded game version.</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3 id="f6-title"><i class="fa-solid fa-gamepad"></i> Discord Rich Presence</h3>
-                <ul id="f6-list">
-                    <li>Show off your live game status on Discord, including your current Minecraft version, nickname, and total playtime.</li>
-                </ul>
+                <div class="card">
+                    <h3 id="u2-title"><i class="fa-solid fa-window-restore"></i> Modern UI & Automation</h3>
+                    <ul id="u2-list">
+                        <li>Uses native Windows API (via JNA) for modern Windows 10/11 style file dialogs.</li>
+                        <li><strong>Java Automation:</strong> Automatically detects and installs the correct Java version required for each specific Minecraft version.</li>
+                        <li><strong>Debug Console:</strong> Clear log window with error filtering to easily find mod crash causes.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Раздел UX/Удобство -->
-        <h2 class="section-title" id="title-ux">User Experience & Comfort</h2>
-        <div class="grid">
-            <div class="card">
-                <h3 id="u1-title"><i class="fa-solid fa-bolt"></i> Ultimate Performance</h3>
-                <ul id="u1-list">
-                    <li><strong>Instant Account Switching:</strong> Thanks to memory texture caching, profiles swap instantly without network delays.</li>
-                    <li><strong>Blazing Fast Startup:</strong> No heavy web engines like Electron inside. Clean, native-like speed.</li>
-                </ul>
+        <!-- СТРАНИЦА: ABOUT -->
+        <div id="page-about" class="page">
+            <h2 class="section-title" id="title-team">Project Team</h2>
+            <div class="team-container">
+                <div class="member-card">
+                    <img src="https://github.com/Txxicu.png" alt="Txxicu" class="member-avatar">
+                    <div class="member-name">Txxicu</div>
+                    <div class="member-role" id="role-developer">Lead Developer</div>
+                </div>
             </div>
 
-            <div class="card">
-                <h3 id="u2-title"><i class="fa-solid fa-window-restore"></i> Modern UI & Automation</h3>
-                <ul id="u2-list">
-                    <li>Uses native Windows API (via JNA) for modern Windows 10/11 style file dialogs.</li>
-                    <li><strong>Java Automation:</strong> Automatically detects and installs the correct Java version required for each specific Minecraft version.</li>
-                    <li><strong>Debug Console:</strong> Clear log window with error filtering to easily find mod crash causes.</li>
-                </ul>
+            <h2 class="section-title" id="title-testers">Testers</h2>
+            <div class="testers-wrapper">
+                <div class="testers-list">
+                    <strong>m1sanya</strong>
+                </div>
             </div>
+
+            <div class="thats-all" id="text-thats-all">ну это все))</div>
         </div>
 
         <!-- Подвал сайта -->
@@ -349,11 +478,17 @@
     <script>
         const translations = {
             en: {
+                navHome: "Home",
+                navAbout: "About",
                 heroDesc: "A fast, lightweight, and highly customizable Minecraft launcher focused on user experience and seamless integration with modern services like Modrinth and Ely.by.",
                 btnDownload: "<i class='fa-solid fa-download'></i> Download Now",
                 btnDonate: "<i class='fa-solid fa-heart'></i> Donate",
                 titleFeatures: "Key Features",
                 titleUx: "User Experience & Comfort",
+                titleTeam: "Project Team",
+                titleTesters: "Testers",
+                roleDeveloper: "Lead Developer",
+                textThatsAll: "well, that's all))",
                 footerRights: "All rights reserved.",
                 donateAlert: "Donation system is currently under development! Thank you for your support.",
                 f1Title: "<i class='fa-solid fa-users'></i> Multi-Account System",
@@ -374,11 +509,17 @@
                 u2List: "<li>Uses native Windows API (via JNA) for modern Windows 10/11 style file dialogs.</li><li><strong>Java Automation:</strong> Automatically detects and installs the correct Java version required for each specific Minecraft version.</li><li><strong>Debug Console:</strong> Clear log window with error filtering to easily find mod crash causes.</li>"
             },
             ru: {
+                navHome: "Главная",
+                navAbout: "О проекте",
                 heroDesc: "Быстрый, легкий и кастомизируемый лаунчер для Minecraft, ориентированный на удобство пользователя и интеграцию с современными сервисами (Ely.by, Modrinth).",
                 btnDownload: "<i class='fa-solid fa-download'></i> Скачать",
                 btnDonate: "<i class='fa-solid fa-heart'></i> Донат",
                 titleFeatures: "Ключевые функции",
                 titleUx: "Удобство и UX",
+                titleTeam: "Команда проекта",
+                titleTesters: "Тестеры",
+                roleDeveloper: "Главный разработчик",
+                textThatsAll: "ну это все))",
                 footerRights: "Все права защищены.",
                 donateAlert: "Система пожертвований находится в разработке! Спасибо за вашу поддержку.",
                 f1Title: "<i class='fa-solid fa-users'></i> Мультиаккаунтность",
@@ -405,9 +546,13 @@
         function setLanguage(lang) {
             currentLang = lang;
             
-            // Переключаем подсветку кнопок
+            // Переключаем подсветку кнопок языков
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`lang-btn-${lang}`).classList.add('active');
+
+            // Обновляем навигацию
+            document.getElementById('nav-home').innerText = translations[lang].navHome;
+            document.getElementById('nav-about').innerText = translations[lang].navAbout;
 
             // Обновляем весь текст
             document.getElementById('hero-desc').innerText = translations[lang].heroDesc;
@@ -416,6 +561,12 @@
             document.getElementById('title-features').innerText = translations[lang].titleFeatures;
             document.getElementById('title-ux').innerText = translations[lang].titleUx;
             document.getElementById('footer-rights').innerText = translations[lang].footerRights;
+            
+            // Текст для страницы About
+            document.getElementById('title-team').innerText = translations[lang].titleTeam;
+            document.getElementById('title-testers').innerText = translations[lang].titleTesters;
+            document.getElementById('role-developer').innerText = translations[lang].roleDeveloper;
+            document.getElementById('text-thats-all').innerText = translations[lang].textThatsAll;
             
             document.getElementById('f1-title').innerHTML = translations[lang].f1Title;
             document.getElementById('f1-list').innerHTML = translations[lang].f1List;
@@ -436,34 +587,41 @@
             document.getElementById('u2-list').innerHTML = translations[lang].u2List;
         }
 
+        // --- ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ---
+        function switchPage(pageName) {
+            // Убираем активный класс со всех страниц и ссылок меню
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+            
+            // Включаем нужную страницу
+            document.getElementById(`page-${pageName}`).classList.add('active');
+            document.getElementById(`nav-${pageName}`).classList.add('active');
+            
+            // При смене страницы плавно скроллим вверх
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function triggerDonate() {
             alert(translations[currentLang].donateAlert);
         }
 
         // --- ФУНКЦИЯ ДЛЯ РАНДОМНОГО ФОНА ---
         function setRandomBackground() {
-            // Массив со всеми твоими обоями из папки images
             const wallpapers = [
                 'images/wallpaper.jpg',
                 'images/wallpaper2.jpg',
                 'images/wallpaper3.jpg',
                 'images/wallpaper4.jpg'
             ];
-            
-            // Выбираем случайный индекс
             const randomIndex = Math.floor(Math.random() * wallpapers.length);
             const selectedWallpaper = wallpapers[randomIndex];
-            
-            // Устанавливаем фон с затемнением (градиентом), чтобы текст хорошо читался
             document.body.style.backgroundImage = `linear-gradient(rgba(18, 18, 20, 0.85), rgba(18, 18, 20, 0.85)), url('${selectedWallpaper}')`;
         }
 
         // --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ---
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. Ставим рандомный фон
             setRandomBackground();
 
-            // 2. Определяем язык браузера
             const userLang = navigator.language || navigator.userLanguage;
             if (userLang.startsWith('ru')) {
                 setLanguage('ru');
